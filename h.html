@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduNotes - Quality eBooks & Notes for Students</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #f59e0b;
+            --accent: #10b981;
+            --dark: #1f2937;
+            --light: #f8fafc;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .cart-link {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: #e6900b;
+            transform: translateY(-2px);
+        }
+
+        /* Categories */
+        .categories {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gray-light);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* Educational Boards Section */
+        .boards {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .boards .section-title {
+            color: white;
+        }
+
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .board-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .board-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .board-icon {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .board-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .board-card p {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .board-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .board-features li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .board-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Featured Products */
+        .featured-products {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, var(--gray-light), #e2e8f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 3rem;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary {
+            background: var(--gray-light);
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* Features */
+        .features {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 2rem;
+            color: var(--gray-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .category-grid,
+            .boards-grid,
+            .products-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .board-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Mobile Navigation Toggle */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+            
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">EduNotes</a>
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Store</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#" class="cart-link">Cart (0)</a></li>
+                </ul>
+                <button class="nav-toggle">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Quality Notes & eBooks for Every Student</h1>
+            <p>Engineering, Medical, Commerce, Arts, NCERT, ICSE & State Boards — all in one place.</p>
+            <a href="#" class="btn btn-primary">Browse Store</a>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Browse by Stream</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-icon">⚙️</div>
+                    <h3>Engineering</h3>
+                    <p>Comprehensive notes for all engineering streams</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🏥</div>
+                    <h3>Medical</h3>
+                    <p>Detailed medical notes and study materials</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">💰</div>
+                    <h3>Commerce</h3>
+                    <p>Business and commerce study resources</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🎨</div>
+                    <h3>Arts</h3>
+                    <p>Arts and humanities study materials</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Boards Section -->
+    <section class="boards">
+        <div class="container">
+            <h2 class="section-title">Educational Boards</h2>
+            <div class="boards-grid">
+                <div class="board-card">
+                    <div class="board-icon">📘</div>
+                    <h3>CBSE</h3>
+                    <p>Complete curriculum coverage for Central Board of Secondary Education</p>
+                    <ul class="board-features">
+                        <li>Class 9-12 Notes</li>
+                        <li>Sample Papers</li>
+                        <li>Previous Year Questions</li>
+                        <li>Subject-wise Materials</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Explore CBSE</a>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-icon">🎓</div>
+                    <h3>ICSE</h3>
+                    <p>Comprehensive study materials for Indian Certificate of Secondary Education</p>
+                    <ul class="board-features">
+                        <li>ICSE Syllabus Coverage</li>
+                        <li>Project Guides</li>
+                        <li>Practical Notes</li>
+                        <li>Exam Preparation</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Explore ICSE</a>
+                </div>
+                
+                <div class="board-card">
+                    <div class="board-icon">🏫</div>
+                    <h3>State Boards</h3>
+                    <p>State-specific curriculum materials for all major state education boards</p>
+                    <ul class="board-features">
+                        <li>Maharashtra Board</li>
+                        <li>UP Board</li>
+                        <li>Tamil Nadu Board</li>
+                        <li>West Bengal Board</li>
+                        <li>And many more...</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Explore State Boards</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Featured eBooks & Notes</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">📚</div>
+                    <div class="product-content">
+                        <h3 class="product-title">CBSE Physics Class 12</h3>
+                        <p class="product-description">Complete physics notes with diagrams, formulas, and solved examples for CBSE Class 12.</p>
+                        <div class="product-price">₹299</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Buy Now</button>
+                            <button class="btn btn-secondary">Preview</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">📚</div>
+                    <div class="product-content">
+                        <h3 class="product-title">ICSE Mathematics</h3>
+                        <p class="product-description">Comprehensive math notes with practice problems and solutions for ICSE students.</p>
+                        <div class="product-price">₹349</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Buy Now</button>
+                            <button class="btn btn-secondary">Preview</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">📚</div>
+                    <div class="product-content">
+                        <h3 class="product-title">State Board Science</h3>
+                        <p class="product-description">Science notes tailored for various state board curricula with local examples.</p>
+                        <div class="product-price">₹249</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Buy Now</button>
+                            <button class="btn btn-secondary">Preview</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose EduNotes?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Expert Prepared</h3>
+                    <p>Notes created by subject matter experts with years of experience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Time Saving</h3>
+                    <p>Focus on learning instead of note-taking with our comprehensive materials.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Affordable</h3>
+                    <p>Quality education materials at student-friendly prices.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Digital Access</h3>
+                    <p>Access your notes anytime, anywhere on any device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>EduNotes</h3>
+                    <p>Your one-stop destination for quality educational materials across all streams and boards.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Store</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Engineering</a></li>
+                        <li><a href="#">Medical</a></li>
+                        <li><a href="#">Commerce</a></li>
+                        <li><a href="#">Arts</a></li>
+                        <li><a href="#">NCERT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Boards</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">CBSE</a></li>
+                        <li><a href="#">ICSE</a></li>
+                        <li><a href="#">State Boards</a></li>
+                        <li><a href="#">International</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <p>Follow us on social media for updates and offers.</p>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📷</a>
+                        <a href="#">💼</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 EduNotes. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Simple cart functionality
+        const buyButtons = document.querySelectorAll('.btn-primary');
+        const cartCount = document.querySelector('.cart-link');
+        let cartItems = 0;
+
+        buyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.textContent === 'Buy Now') {
+                    cartItems++;
+                    cartCount.textContent = `Cart (${cartItems})`;
+                    
+                    // Show success message
+                    const originalText = this.textContent;
+                    this.textContent = 'Added to Cart!';
+                    this.style.background = '#10b981';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                    }, 2000);
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
